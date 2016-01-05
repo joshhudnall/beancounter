@@ -73,7 +73,7 @@ class Controller extends BaseController
         
         if ($type == 'image') {
           // Add image to queue for processing
-          \Queue::pushOn('media-'.\App::environment(), new \App\Commands\ProcessImage($media));
+          \Queue::pushOn('media-fpassets-'.\App::environment(), new \App\Commands\ProcessImage($media));
         }
         
         return $media;
