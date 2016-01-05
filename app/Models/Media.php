@@ -11,7 +11,7 @@ class Media extends Model
   public function __construct() {
     parent::__construct();
     
-    $this->sizes = array_keys(\Config::get('media.sizes'));
+    $this->sizes = array_keys(['o' => TRUE] + \Config::get('media.sizes'));
   }
   
   public function tags() {

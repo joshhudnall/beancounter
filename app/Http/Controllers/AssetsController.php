@@ -51,6 +51,15 @@ class AssetsController extends Controller
       
       return $view;
     }
+    
+    public function getDownload($assetID) {
+      $asset = \App\Models\Media::find($assetID);
+      
+      if ( ! $asset) abort(404);
+      
+      ob_clean();
+      return response()->download($asset->filePath('o'));
+    }
 
     public function getUpload()
     {

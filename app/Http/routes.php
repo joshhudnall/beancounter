@@ -36,6 +36,10 @@ Route::group(['middleware' => 'web'], function () {
       'as' => 'assets.list',
       'uses' => 'AssetsController@getIndex'
     ]);
+    Route::get('asset/download/{assetID}', [
+      'as' => 'assets.download',
+      'uses' => 'AssetsController@getDownload'
+    ]);
     Route::get('asset/upload', [
       'as' => 'assets.upload',
       'uses' => 'AssetsController@getUpload'
