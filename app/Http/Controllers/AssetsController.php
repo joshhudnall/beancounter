@@ -44,9 +44,9 @@ class AssetsController extends Controller
         foreach ($tags as $tag) {
           //$assets = $assets->orWhere('name', 'LIKE', '%'.$tag.'%');
         }
-        $view->assets = $assets->paginate(20);
+        $view->assets = $assets->paginate(24);
     	} else {
-        $view->assets = \App\Models\Media::paginate(20);
+        $view->assets = \App\Models\Media::paginate(24);
     	}
       
       return $view;
