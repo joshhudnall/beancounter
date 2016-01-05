@@ -1,0 +1,46 @@
+/**
+ * TinyMCE Overrides
+ */
+.mce-tinymce {
+  border-color: darken(#ddd, 5%) !important;
+  
+  .mce-toolbar-grp {
+    background: #ddd !important;
+    
+    .mce-btn {
+      background: none !important;
+      border: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      
+      &:hover {
+        background: none !important;
+        
+        i,
+        button {
+          color: #000;
+        }
+      }
+      
+      i {
+        font-size: 12px;
+        text-shadow: none !important;
+      }
+      
+      button {
+        font-weight: bold !important;
+        font-size: 12px;
+      }
+    }
+  }
+  .mce-edit-area {
+    border-top-color: darken(#ddd, 5%) !important;
+  }
+  .mce-statusbar {
+    border-top: none !important;
+    background: #ddd !important;
+    .mce-path {
+      display: none !important;
+    }
+  }
+}
