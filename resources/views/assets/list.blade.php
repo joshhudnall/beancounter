@@ -42,6 +42,10 @@
   <?php endforeach; ?>
   <?php if ($count%$cols != 1): ?></div><?php endif; ?>
   
+  <div class="pagination">
+    {!! $assets->render() !!}
+  </div>
+  
 </div>
 
 @endsection
