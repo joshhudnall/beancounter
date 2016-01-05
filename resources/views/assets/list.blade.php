@@ -52,13 +52,13 @@ $(function() {
     </div>
   </div>
 
-  <?php $cols = 4; $count = 1; foreach ($assets as $asset): ?>
+  <?php $cols = 6; $count = 1; foreach ($assets as $asset): ?>
     <?php if ($count%$cols == 1): ?>
       <div class="row asset-row">
     <?php endif; ?>
   
     <div class="col-sm-{{ 12/$cols }}">
-      <img src="{{ $asset->url('tl') }}" />
+      <img src="{{ $asset->url('t') }}" />
     </div>
     
     <?php if ($count%$cols == 0): ?>
