@@ -36,6 +36,10 @@ Route::group(['prefix' => 'api/v1'], function () {
     'as' => 'api.stats.sbCounter',
     'uses' => 'API\StatsController@getStatusBoardCounter'
   ]);
+  Route::get('stats/{statName}/sb-graph', [
+    'as' => 'api.stats.sbGraph',
+    'uses' => 'API\StatsController@getStatusBoardGraph'
+  ]);
 });
 
 Route::group(['middleware' => 'web'], function () {

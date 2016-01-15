@@ -61,6 +61,55 @@ class StatsController extends Controller
       
       return view('api.statusboard.counter', ['counter' => $counter]);
     }
+    
+    public function getStatusBoardGraph(\Illuminate\Http\Request $request, $statName)
+    {
+      // Validate API Key
+      $apiKey = \App\Models\ApiKey::where('api_key', $request->get('apiKey'))->where('active', 1)->first();
+      if ( ! $apiKey) {
+        return \Response::json(['status' => 'Error', 'error' => 'Invalid API Key.'], 401);
+      }
+      
+      $user = $apiKey->user;
+      
+      $counter = $user->counters()->where('name', $statName)->first();
+      if ( ! $counter) {
+          return \Response::json(['status' => 'Error', 'error' => 'Counter not found'], 422);
+      }
+      
+      // Get last 6 months' data
+      $date = \Carbon\Carbon::now();
+      $datapoints = [];
+      for ($i = 0; $i < 6; $i++) {
+        if ($i == 0) {
+          $label = 'Now';
+        } else {
+          $label = '-'.$i.' Mo';
+        }
+        
+        $query = $counter->beans()->where('created_at', '<=', $date->subMonths($i));
+        
+        if ($counter->type == \App\Models\Counter::CounterTypeCount) {
+          $value = $query->sum('value');
+        } else {
+          $value = $query->avg('value');
+        }
+        
+        $datapoints[$label] = $value ?: 0;
+      }
+      
+      $jsonData = [
+        'graph' => [
+          'title' => $counter->name,
+          'datasequences' => [
+            'title' => $counter->name,
+            'datapoints' => $datapoints,
+          ],
+        ],
+      ];
+      
+      return \Response::json($jsonData, 200);
+    }
 }
 
 
