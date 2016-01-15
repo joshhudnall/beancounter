@@ -78,16 +78,16 @@ class StatsController extends Controller
       }
       
       // Get last 6 months' data
-      $date = \Carbon\Carbon::now();
+      $date = \Carbon\Carbon::now()->subMonths(6);
       $datapoints = [];
       for ($i = 0; $i < 6; $i++) {
-        if ($i == 0) {
+        if ($i == 5) {
           $label = 'Now';
         } else {
-          $label = '-'.$i.' Mo';
+          $label = '-'.(5-$i).' Mo';
         }
         
-        $query = $counter->beans()->where('created_at', '<=', $date->subMonths(1));
+        $query = $counter->beans()->where('created_at', '<=', $date->addMonths(1));
         
         if ($counter->type == \App\Models\Counter::CounterTypeCount) {
           $value = $query->sum('value');
@@ -95,7 +95,10 @@ class StatsController extends Controller
           $value = $query->avg('value');
         }
         
-        $datapoints[$label] = $value ?: 0;
+        $datapoints[] = [
+          'title' => $label,
+          'value' => 1 * $value ?: 0,
+        ];
       }
       
       $jsonData = [
@@ -104,9 +107,7 @@ class StatsController extends Controller
           'datasequences' => [
             [
               'title' => $counter->name,
-              'datapoints' => [
-                $datapoints
-              ],
+              'datapoints' => $datapoints,
             ],
           ],
         ],
