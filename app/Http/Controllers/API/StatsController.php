@@ -102,12 +102,17 @@ class StatsController extends Controller
         'graph' => [
           'title' => $counter->name,
           'datasequences' => [
-            'title' => $counter->name,
-            'datapoints' => $datapoints,
+            [
+              'title' => $counter->name,
+              'datapoints' => [
+                $datapoints
+              ],
+            ],
           ],
         ],
       ];
       
+      ob_clean();
       return \Response::json($jsonData, 200);
     }
 }
