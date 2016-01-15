@@ -87,7 +87,7 @@ class StatsController extends Controller
           $label = '-'.$i.' Mo';
         }
         
-        $query = $counter->beans()->where('created_at', '<=', $date->subMonths($i));
+        $query = $counter->beans()->where('created_at', '<=', $date->subMonths(1));
         
         if ($counter->type == \App\Models\Counter::CounterTypeCount) {
           $value = $query->sum('value');
