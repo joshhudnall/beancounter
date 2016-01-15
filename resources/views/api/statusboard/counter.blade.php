@@ -63,9 +63,9 @@
 			{
 				font-size: 120px;
 				line-height: 120px;
-				margin-top: 15px;
+				margin-top: 40px;
 				margin-bottom: 28px;
-				color: white;
+				color: #<?php echo \Request::get('countColor') ?: 'ffffff'; ?>;
 				text-shadow:0px -2px 0px black;
 				text-transform: uppercase;
 			}
@@ -77,7 +77,7 @@
 				padding-top: 20px;
 				font-size: 16px;
 				line-height: 18px;
-				color: #7e7e7e;
+				color: #<?php echo \Request::get('headerColor') ?: '7e7e7e'; ?>;
 				text-transform: uppercase;
 			}
 		</style>
