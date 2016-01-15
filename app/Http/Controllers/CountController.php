@@ -26,15 +26,15 @@ class CountController extends Controller
       // Validate API Key
       $apiKey = \App\Models\ApiKey::where('api_key', $request->get('apiKey'))->where('active', 1)->first();
       if ( ! $apiKey) {
-        return \Response::json(['error' => 'Invalid API Key.'], 401);
+        return \Response::json(['status' => 'Error', 'error' => 'Invalid API Key.'], 401);
       }
       
       // Validate Data
       if ( ! $request->has('name')) {
-        return \Response::json(['error' => 'The name field is required.'], 400);
+        return \Response::json(['status' => 'Error', 'error' => 'The name field is required.'], 400);
       }
       if ( ! $request->has('count') && ! $request->has('value')) {
-        return \Response::json(['error' => 'Either the count or value field is required.'], 400);
+        return \Response::json(['status' => 'Error', 'error' => 'Either the count or value field is required.'], 400);
       }
       
       $user = $apiKey->user;
@@ -48,10 +48,10 @@ class CountController extends Controller
         ]);
       } else {
         if ($counter->type == \App\Models\Counter::CounterTypeCount && ! $request->has('count')) {
-          return \Response::json(['error' => 'Stat "'.$request->get('name').'" already exists and is a counter stat, but the "count" field was not included.'], 422);
+          return \Response::json(['status' => 'Error', 'error' => 'Stat "'.$request->get('name').'" already exists and is a counter stat, but the "count" field was not included.'], 422);
         }
         if ($counter->type == \App\Models\Counter::CounterTypeValue && ! $request->has('value')) {
-          return \Response::json(['error' => 'Stat "'.$request->get('name').'" already exists and is a value stat, but the "value" field was not included.'], 422);
+          return \Response::json(['status' => 'Error', 'error' => 'Stat "'.$request->get('name').'" already exists and is a value stat, but the "value" field was not included.'], 422);
         }
       }
       
@@ -65,7 +65,7 @@ class CountController extends Controller
         $bean->save();
       }
       
-      return \Response::json(['error' => 'Success'], 200);
+      return \Response::json(['status' => 'Success'], 200);
     }
 }
 

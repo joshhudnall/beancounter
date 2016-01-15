@@ -14,7 +14,20 @@ class Counter extends Model
    * @var array
    */
   protected $fillable = [
-    'user_id', 'name', 'type',
+    'user_id', 
+    'name', 
+    'type',
+  ];
+  
+  protected $appends = [
+    'value',
+  ];
+  
+  protected $hidden = [
+    'id',
+    'user_id',
+    'created_at',
+    'updated_at',
   ];
   
   public function getValueAttribute($value) {

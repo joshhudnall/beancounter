@@ -27,6 +27,17 @@ Route::get('count', [
   'uses' => 'CountController@getCount'
 ]);
 
+Route::group(['prefix' => 'api/v1'], function () {
+  Route::get('stats/{statName}', [
+    'as' => 'api.stats.value',
+    'uses' => 'API\StatsController@getValue'
+  ]);
+  Route::get('stats/{statName}/sb-counter', [
+    'as' => 'api.stats.sbCounter',
+    'uses' => 'API\StatsController@getStatusBoardCounter'
+  ]);
+});
+
 Route::group(['middleware' => 'web'], function () {
     
     Route::auth();
