@@ -8,7 +8,15 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    You are logged in!
+                  <?php if (\Auth::check()): ?>
+                    <ul class="stats">
+                      <?php foreach (\Auth::user()->counters as $counter): ?>
+                        <li>{{ $counter->name }}: {{ $counter->value }}</li>
+                      <?php endforeach; ?>
+                    </ul>
+                  <?php else: ?>
+                    <a href="{{ url('/login') }}" class="btn btn-primary">Log In to Continue</a>
+                  <?php endif; ?>
                 </div>
             </div>
         </div>

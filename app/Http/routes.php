@@ -22,27 +22,31 @@
 |
 */
 
+Route::get('count', [
+  'as' => 'count',
+  'uses' => 'CountController@getCount'
+]);
+
 Route::group(['middleware' => 'web'], function () {
+    
     Route::auth();
 
     Route::get('/', [
       'as' => 'home',
-      function() {
-        return \Redirect::route('assets.list');
-      }
+      'uses' => 'HomeController@getIndex'
+    ]);
+
+    Route::get('settings/api-keys', [
+      'as' => 'settings.apiKeys.list',
+      'uses' => 'SettingsController@getApiKeys'
+    ]);
+    Route::get('settings/api-keys/add', [
+      'as' => 'settings.apiKeys.add',
+      'uses' => 'SettingsController@getAddApiKey'
+    ]);
+    Route::get('settings/api-keys/{apiKey}/deactivate', [
+      'as' => 'settings.apiKeys.deactivate',
+      'uses' => 'SettingsController@getDeactivateApiKey'
     ]);
     
-    Route::get('asset', [
-      'as' => 'assets.list',
-      'uses' => 'AssetsController@getIndex'
-    ]);
-    Route::get('asset/download/{assetID}', [
-      'as' => 'assets.download',
-      'uses' => 'AssetsController@getDownload'
-    ]);
-    Route::get('asset/upload', [
-      'as' => 'assets.upload',
-      'uses' => 'AssetsController@getUpload'
-    ]);
-    Route::post('asset/upload', 'AssetsController@postUpload');
 });

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -23,4 +23,16 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Relations
+     */
+    public function apiKeys() {
+      return $this->hasMany('\App\Models\ApiKey');
+    }
+    
+    public function counters() {
+      return $this->hasMany('\App\Models\Counter');
+    }
+    
 }

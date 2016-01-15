@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>fastPXL Asset Manager</title>
+    <title>Bean Counter</title>
 
     <!-- Fonts -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel='stylesheet' type='text/css'>
@@ -42,15 +42,14 @@
 
         <!-- Branding Image -->
         <a class="navbar-brand" href="{{ url('/') }}">
-          fastPXL Asset Manager
+          Bean Counter
         </a>
       </div>
 
       <div class="collapse navbar-collapse" id="spark-navbar-collapse">
         <!-- Left Side Of Navbar -->
         <ul class="nav navbar-nav">
-          <li><a href="{{ route('assets.list') }}">Assets</a></li>
-          <li><a href="{{ route('assets.upload') }}">Upload</a></li>
+          <li><a href="/">Home</a></li>
         </ul>
 
         <!-- Right Side Of Navbar -->
@@ -66,6 +65,7 @@
               </a>
 
               <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ route('settings.apiKeys.list') }}"><i class="fa fa-btn fa-key"></i>API Keys</a></li>
                 <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
               </ul>
             </li>
@@ -85,9 +85,6 @@
 
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
   <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-  
-  <script src="{{ asset('assets/js/dropzone/dist/dropzone.js') }}"></script>
-  <link rel="stylesheet" href="{{ asset('assets/js/dropzone/dist/dropzone.css') }}">
   
   <script src="{{ asset('assets/js/app.js') }}"></script>
 
