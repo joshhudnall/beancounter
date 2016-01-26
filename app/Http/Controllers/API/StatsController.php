@@ -104,6 +104,7 @@ class StatsController extends Controller
       $jsonData = [
         'graph' => [
           'title' => $counter->name,
+          'type' => 'line',
           'datasequences' => [
             [
               'title' => $counter->name,
