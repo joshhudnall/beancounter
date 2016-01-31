@@ -51,6 +51,11 @@ Route::group(['middleware' => 'web'], function () {
       'uses' => 'HomeController@getIndex'
     ]);
 
+    Route::get('counter/{id}', [
+      'as' => 'counter.view',
+      'uses' => 'CounterController@getView'
+    ]);
+
     Route::get('settings/api-keys', [
       'as' => 'settings.apiKeys.list',
       'uses' => 'SettingsController@getApiKeys'

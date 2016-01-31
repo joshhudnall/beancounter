@@ -11,7 +11,7 @@
                   <?php if (\Auth::check()): ?>
                     <ul class="stats">
                       <?php foreach (\Auth::user()->counters as $counter): ?>
-                        <li>{{ $counter->name }}: {{ $counter->value }}</li>
+                        <li><a href="{{ route('counter.view', [$counter->id]) }}">{{ $counter->name }}</a>: {{ $counter->value }}</li>
                       <?php endforeach; ?>
                     </ul>
                   <?php else: ?>
