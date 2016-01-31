@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">{{ $counter->name }}</div>
+                <div class="panel-heading">{{ $counter->name }} <div class="pull-right">{{ $counter->type == \App\Models\Counter::CounterTypeCount ? 'Total' : 'Average' }}: <b>{{ $counter->value }}</b></div></div>
 
                 <div class="panel-body">
                   <table class="items table table-striped table-hover">
