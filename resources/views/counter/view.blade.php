@@ -11,7 +11,7 @@
                   <table class="items table table-striped table-hover">
                     <?php foreach ($counter->beans()->orderBy('created_at', 'desc')->get() as $bean): ?>
                       <tr>
-                        <td>{{ $bean->created_at->timezone('America/Denver')->format('F j, Y g:ia') }}:</td>
+                        <td>{{ $bean->created_at->timezone('America/Denver')->format('D, M j, Y g:ia') }}:</td>
                         <td>{{ $bean->value }}</td>
                       </tr>
                     <?php endforeach; ?>
