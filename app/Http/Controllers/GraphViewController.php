@@ -61,14 +61,21 @@ class GraphViewController extends Controller
         $labels[] = $k;
       }
       
+      $colors = [
+        'RGBA(220, 7, 35, {alpha})',
+        'RGBA(54, 160, 177, {alpha})',
+        'RGBA(32, 41, 70, {alpha})',
+      ];
+      
       $datasets = [];
+      $colorIndex = 0;
       foreach ($dataPoints as $key => $point) {
         $dataset = [
           'label' => $key,
           
-          'fillColor' => "rgba(220,220,220,0.2)",
-          'strokeColor' => "rgba(220,220,220,1)",
-          'pointColor' => "rgba(220,220,220,1)",
+          'fillColor' => str_replace('{alpha}', '0.2', $colors[$colorIndex]),
+          'strokeColor' => str_replace('{alpha}', '1', $colors[$colorIndex]),
+          'pointColor' => str_replace('{alpha}', '1', $colors[$colorIndex]),
           'pointStrokeColor' => "#fff",
           'pointHighlightFill' => "#fff",
           'pointHighlightStroke' => "rgba(220,220,220,1)",
@@ -80,6 +87,8 @@ class GraphViewController extends Controller
         }
         
         $datasets[] = $dataset;
+        
+        $colorIndex++;
       }
       
       $view->labels = $labels;
