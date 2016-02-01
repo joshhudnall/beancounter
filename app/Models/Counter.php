@@ -7,6 +7,8 @@ class Counter extends Model
   
   const CounterTypeCount = 1;
   const CounterTypeValue = 2;
+  
+  public static $units = ['s','m','h','d','w'];
 
   /**
    * The attributes that are mass assignable.
@@ -36,6 +38,76 @@ class Counter extends Model
     } else {
       return $this->beans()->avg('value');
     }
+  }
+  
+  public function valueForRange($start, $end) {
+    $query = $this->beans()->where('created_at', '>=', $start->copy()->timezone('UTC'))->where('created_at', '<=', $end->copy()->timezone('UTC'));
+
+    if ($this->type == static::CounterTypeCount) {
+      return $query->sum('value') ?: 0;
+    } else {
+      return $query->avg('value') ?: 0;
+    }
+  }
+  
+  public function graphValues($start, $end, $intervalUnit = 'd', $interval = 1) {
+    $underUnit = array_search($intervalUnit, static::$units) - 1;
+    $underUnit = max(0, $underUnit);
+    
+    $dataPoints = [];
+    while ($start < $end) {
+      $intervalEnd = $this->addInterval($start, $interval, $intervalUnit);
+      
+      $dataPoints[$this->labelForIntervalUnit($start, $intervalUnit)] = 1.0 * $this->valueForRange($start, $intervalEnd);
+      
+      $start = $this->addInterval($intervalEnd, 1, $underUnit);
+    }
+    
+    return $dataPoints;
+  }
+  
+  private function labelForIntervalUnit($time, $intervalUnit) {
+    switch ($intervalUnit) {
+      case 's':
+        $label = $time->format('s');
+        break;
+      case 'm':
+        $label = $time->format('g:ia');
+        break;
+      case 'h':
+        $label = $time->format('g:00a');
+        break;
+      case 'd':
+        $label = $time->format('D');
+        break;
+      case 'w':
+        $label = $time->format('M j');
+        break;
+    }
+    
+    return $label;
+  }
+  
+  private function addInterval($time, $interval, $intervalUnit) {
+    switch ($intervalUnit) {
+      case 's':
+        $time = $time->copy()->addSeconds($interval);
+        break;
+      case 'm':
+        $time = $time->copy()->addMinutes($interval);
+        break;
+      case 'h':
+        $time = $time->copy()->addHours($interval);
+        break;
+      case 'd':
+        $time = $time->copy()->addDays($interval);
+        break;
+      case 'w':
+        $time = $time->copy()->addWeeks($interval);
+        break;
+    }
+    
+    return $time;
   }
 
   /**

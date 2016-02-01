@@ -56,6 +56,11 @@ Route::group(['middleware' => 'web'], function () {
       'uses' => 'CounterController@getView'
     ]);
 
+    Route::get('graph', [
+      'as' => 'graph.view',
+      'uses' => 'GraphViewController@getView'
+    ]);
+
     Route::get('settings/api-keys', [
       'as' => 'settings.apiKeys.list',
       'uses' => 'SettingsController@getApiKeys'
