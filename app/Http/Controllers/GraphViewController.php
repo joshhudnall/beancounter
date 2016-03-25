@@ -45,7 +45,7 @@ class GraphViewController extends Controller
       $rangeEnd = \Request::has('end') ? \Carbon\Carbon::parse(\Request::get('end'), 'America/Denver') : $now->copy();
       
       if ($rangeEnd > $now) $rangeEnd = $now->copy();
-      if ($rangeEnd < $rangeStart || $rangeEnd->diffInDays($rangeStart) > 14) {
+      if ($rangeEnd < $rangeStart) {
         $rangeStart = $rangeEnd->copy()->subDays(14);
       }
       

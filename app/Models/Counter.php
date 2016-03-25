@@ -8,7 +8,7 @@ class Counter extends Model
   const CounterTypeCount = 1;
   const CounterTypeValue = 2;
   
-  public static $units = ['s','m','h','d','w'];
+  public static $units = ['s','m','h','d','w','mo'];
 
   /**
    * The attributes that are mass assignable.
@@ -55,10 +55,16 @@ class Counter extends Model
     $underUnit = max(0, $underUnit);
     
     $dataPoints = [];
+    $val = 0;
     while ($start < $end) {
       $intervalEnd = $this->addInterval($start, $interval, $intervalUnit);
       
-      $dataPoints[$this->labelForIntervalUnit($start, $intervalUnit)] = 1.0 * $this->valueForRange($start, $intervalEnd);
+      if ($this->type == static::CounterTypeCount) {
+        $val += 1.0 * $this->valueForRange($start, $intervalEnd);
+        $dataPoints[$this->labelForIntervalUnit($start, $intervalUnit)] = $val;
+      } else {
+        $dataPoints[$this->labelForIntervalUnit($start, $intervalUnit)] = 1.0 * $this->valueForRange($start, $intervalEnd);
+      }
       
       $start = $this->addInterval($intervalEnd, 1, $underUnit);
     }
@@ -83,6 +89,9 @@ class Counter extends Model
       case 'w':
         $label = $time->format('M j');
         break;
+      case 'mo':
+        $label = $time->format('M Y');
+        break;
     }
     
     return $label;
@@ -104,6 +113,9 @@ class Counter extends Model
         break;
       case 'w':
         $time = $time->copy()->addWeeks($interval);
+        break;
+      case 'mo':
+        $time = $time->copy()->addMonths($interval);
         break;
     }
     
